@@ -15,9 +15,9 @@ export default function Quote({
   return (
     <div
       id={id}
-      className="flex flex-col gap-8 bg-[#D05252] w-3/5 rounded-3xl px-16 py-8 m-4 text-white"
+      className="flex flex-col gap-8 bg-[#D05252] w-3/5 rounded-3xl px-4 sm:px-8 md:px-12 lg:px-16 py-8 m-4 text-white"
     >
-      <p style={hideWhenLoading} className="mb-4 font-normal text-[2.5rem]">
+      <p style={hideWhenLoading} className="mb-4 font-normal text-[1rem] sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]">
         {content}
       </p>
       <div style={showWhenLoading}>
@@ -29,7 +29,7 @@ export default function Quote({
         <div style={showWhenLoading}>
           <Loader />
         </div>
-        <p style={hideWhenLoading} className="font-bold text-[1.56rem]">
+        <p style={hideWhenLoading} className="font-bold text-[0.875rem] sm:text-[1rem] md:text-[1.25rem] lg:text-[1.56rem]">
           -{author}
         </p>
 

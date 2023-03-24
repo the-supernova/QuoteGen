@@ -5,7 +5,7 @@ import Bookmark from "./components/Bookmark";
 import quoteService from "./services/quote";
 
 import bookmark from "./assets/bookmark.png";
-import remove from "./assets/remove.png"
+import remove from "./assets/remove.png";
 
 function App() {
   const [quote, setQuote] = useState({ content: "", author: "" });
@@ -22,14 +22,14 @@ function App() {
   };
 
   const addBookmark = () => {
-    if(bookmarks.find((bookmark) => bookmark._id === quote._id) === undefined)
+    if (bookmarks.find((bookmark) => bookmark._id === quote._id) === undefined)
       setBookmarks([...bookmarks, quote]);
   };
 
   const removeBookmark = (e) => {
     const id = e.target.parentElement.parentElement.parentElement.id;
     setBookmarks(bookmarks.filter((bookmark) => bookmark._id !== id));
-  }
+  };
   useEffect(() => {
     setIsLoading(true);
     (async () => {
@@ -49,14 +49,11 @@ function App() {
   }, []);
   return (
     <div className="flex flex-col items-center gap-8">
-      <nav className="w-full flex justify-between text-white px-[3em] py-[2em]">
-        <button to="/" className="font-normal focus:font-bold text-[2.5rem]">
+      <nav className="w-full flex max-[580px]:flex-col justify-between text-white px-[3em] py-[2em]">
+        <button className="font-normal focus:font-bold text-[2.5rem]">
           Home
         </button>
-        <button
-          to="/bookmark"
-          className="font-normal focus:font-bold text-[2.5rem]"
-        >
+        <button className="font-normal focus:font-bold text-[2.5rem]">
           Bookmarks
         </button>
       </nav>
@@ -86,7 +83,7 @@ function App() {
           <input
             type="submit"
             value="Next Quote"
-            className="bg-[#009C51] text-white rounded-[1.9rem] px-8 py-2 font-normal text-[2.5rem]"
+            className="cursor-pointer bg-[#009C51] text-white rounded-[1.9rem] px-8 py-2 font-normal text-[1rem] sm:text-[1.5rem] md:text-[2rem] lg:text-[2.5rem]"
           />
         </form>
       </div>
