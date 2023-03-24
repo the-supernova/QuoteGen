@@ -11,4 +11,9 @@ const getTags = async () => {
     return response.data;
 }
 
-export default { getRandom, getTags };
+const getQuoteById = async (id) => {
+  const response = await axios.get(`${baseUrl}/quotes/${id}`);
+  return response.data;
+}
+
+export default { getRandom, getTags, getQuoteById };

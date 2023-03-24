@@ -11,8 +11,10 @@ function App() {
   const [quote, setQuote] = useState({ content: "", author: "" });
   const [tag, setTag] = useState("Choose a tag");
   const [tags, setTags] = useState([]);
+  const [quoteIds, setQuoteIds] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
@@ -22,13 +24,20 @@ function App() {
   };
 
   const addBookmark = () => {
-    if (bookmarks.find((bookmark) => bookmark._id === quote._id) === undefined)
-      setBookmarks([...bookmarks, quote]);
+    if (quoteIds.find((qId) => qId === quote._id) === undefined) {
+      const newIds = [...quoteIds, quote._id];
+      setQuoteIds(newIds);
+      localStorage.setItem("quoteIDs", JSON.stringify(newIds));
+    }
+    setIsBookmarked(!isBookmarked);
   };
 
   const removeBookmark = (e) => {
     const id = e.target.parentElement.parentElement.parentElement.id;
-    setBookmarks(bookmarks.filter((bookmark) => bookmark._id !== id));
+    const updatedIds = quoteIds.filter((quote) => quote !== id);
+    setQuoteIds(updatedIds);
+    localStorage.setItem("quoteIDs", JSON.stringify(updatedIds));
+    setIsBookmarked(!isBookmarked);
   };
   useEffect(() => {
     setIsLoading(true);
@@ -47,9 +56,25 @@ function App() {
     }
     fetchTags();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const quotes = JSON.parse(localStorage.getItem("quoteIDs"));
+      if (quotes) {
+        const bookmarks = await Promise.all(
+          quotes.map(async (quote) => {
+            const data = await quoteService.getQuoteById(quote);
+            return data;
+          })
+        );
+        setBookmarks(bookmarks);
+      }
+    })();
+  }, [isBookmarked]);
+
   return (
     <div className="flex flex-col items-center gap-8">
-      <nav className="w-full flex max-[580px]:flex-col justify-between text-white px-[3em] py-[2em]">
+      <nav className="w-full flex flex-col sm:flex-row justify-between text-white px-[3em] py-[2em]">
         <button className="font-normal focus:font-bold text-[2.5rem]">
           Home
         </button>
