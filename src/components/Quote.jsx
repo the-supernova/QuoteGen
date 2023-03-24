@@ -1,10 +1,10 @@
 import bookmark from '../assets/bookmark.png'
-export default function Quote() {
+export default function Quote({content, author}) {
     return (
-        <div className="bg-[#D05252] rounded-xl p-8 text-white">
-            <p className="mb-4 font-normal text-[2.5rem]">The human spirit must prevail over technology</p>
+        <div className="flex flex-col gap-8 bg-[#D05252] w-3/5 rounded-3xl px-16 py-8 m-4 text-white">
+            <p className="mb-4 font-normal text-[2.5rem]">{content}</p>
             <div className="flex justify-around">
-                <p className="font-bold text-[1.56rem]">-Albert Einstein</p>
+                <p className="font-bold text-[1.56rem]">-{author}</p>
                 <button><img src={bookmark}/></button>
             </div>
         </div>
