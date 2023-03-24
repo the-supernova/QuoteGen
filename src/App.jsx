@@ -13,6 +13,7 @@ function App() {
   const [tags, setTags] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [isClicked, setIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,9 +31,11 @@ function App() {
     setBookmarks(bookmarks.filter((bookmark) => bookmark._id !== id));
   }
   useEffect(() => {
+    setIsLoading(true);
     (async () => {
       const data = await quoteService.getRandom(tag);
       setQuote(data);
+      setIsLoading(false);
       setTag("Choose a tag");
     })();
   }, [isClicked]);
@@ -64,6 +67,7 @@ function App() {
         author={quote.author}
         handler={addBookmark}
         icon={bookmark}
+        isLoading={isLoading}
       />
       <div>
         <form className="flex flex-col gap-12" onSubmit={handleSubmit}>
